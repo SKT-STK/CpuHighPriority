@@ -1,0 +1,23 @@
+[package]
+name = "cpu-high-priority"
+version = "0.0.0"
+description = "Simple app to easily menage which apps shall have High CPU Priority all the time!"
+authors = []
+license = "MIT SKT-STK (c) 2024"
+repository = ""
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[build-dependencies]
+tauri-build = { version = "1.5", features = [] }
+
+[dependencies]
+tauri = { version = "1.5", features = [ "shell-open", "shell-execute", "path-all", "dialog-open"] }
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+
+[features]
+# this feature is used for production builds or when `devPath` points to the filesystem
+# DO NOT REMOVE!!
+custom-protocol = ["tauri/custom-protocol"]
