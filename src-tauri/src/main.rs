@@ -2,6 +2,7 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 use std::env;
+use tauri::{Manager, Window};
 
 #[tauri::command]
 fn write_file(content: &str, path: &str) {
@@ -16,12 +17,6 @@ fn read_file(path: &str) -> String {
     Ok(x) => x,
     Err(_) => return String::from("{\"executablesPaths\":[]}")
   }
-}
-
-#[tauri::command]
-fn get_main_exec_dir() -> String {
-  let exe_path = env::current_exe().unwrap();
-  String::from(exe_path.parent().unwrap().to_str().unwrap())
 }
 
 #[tauri::command]
@@ -40,9 +35,21 @@ fn create_bat_files() {
   }
 }
 
+#[tauri::command]
+fn get_process_dir() -> String {
+  let exe_path = env::current_exe().unwrap();
+  String::from(exe_path.parent().unwrap().to_str().unwrap())
+}
+
+#[tauri::command]
+async fn close_splashscreen(window: Window) {
+  window.get_window("splashscreen").expect("no window labeled 'splashscreen' found").close().unwrap();
+  window.get_window("main").expect("no window labeled 'main' found").show().unwrap();
+ }
+
 fn main() {
   tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![create_bat_files, write_file, read_file, get_main_exec_dir])
+    .invoke_handler(tauri::generate_handler![create_bat_files, write_file, read_file, get_process_dir, close_splashscreen])
     .run(tauri::generate_context!())
     .unwrap();
 }

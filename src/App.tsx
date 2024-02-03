@@ -11,15 +11,15 @@ export default function App() {
   const appconfDirRef = useRef<string | null>(null)
 
   useEffect(() => {(async () => {
-    const dir = await invoke('get_main_exec_dir') as string
+    // const dir = await invoke('get_main_exec_dir') as string
 
-    if (dir.endsWith('debug')) {
-      regeditsDirRef.current = await join(dir, '../../..')
+    if (window.processDir.endsWith('debug')) {
+      regeditsDirRef.current = await join(window.processDir, '../../..')
       appconfDirRef.current = await join(regeditsDirRef.current, 'other')
     }
     else {
-      regeditsDirRef.current = dir
-      appconfDirRef.current = dir
+      regeditsDirRef.current = window.processDir
+      appconfDirRef.current = window.processDir
     }
 
     const path = await join(appconfDirRef.current!, 'app.conf')

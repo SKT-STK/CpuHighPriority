@@ -50,7 +50,19 @@
         "width": 800,
         "height": 600,
         "minWidth": 500,
-        "minHeight": 375
+        "minHeight": 375,
+        "visible": false
+      },
+      {
+        "width": 400,
+        "height": 200,
+        "title": "CPU High Priority",
+        "label": "splashscreen",
+        "center": true,
+        "decorations": false,
+        "alwaysOnTop": true,
+        "transparent": true,
+        "url": "splashscreen.html"
       }
     ]
   }
