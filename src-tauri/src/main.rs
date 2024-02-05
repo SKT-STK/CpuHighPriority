@@ -43,13 +43,19 @@ fn get_process_dir() -> String {
 
 #[tauri::command]
 async fn close_splashscreen(window: Window) {
-  window.get_window("splashscreen").expect("no window labeled 'splashscreen' found").close().unwrap();
-  window.get_window("main").expect("no window labeled 'main' found").show().unwrap();
+  if let Some(splash_window) = window.get_window("splashscreen") {
+    splash_window.close().unwrap()
+  }
+
+  window.get_window("main")
+    .expect("no window labeled 'main' found")
+    .show()
+    .unwrap();
  }
 
 fn main() {
   tauri::Builder::default()
     .invoke_handler(tauri::generate_handler![create_bat_files, write_file, read_file, get_process_dir, close_splashscreen])
     .run(tauri::generate_context!())
-    .unwrap();
+    .expect("Could not start Tauri application.");
 }

@@ -18,9 +18,9 @@ const initApp = async () => {
 
 initApp().then(() => {
   ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-  <React.StrictMode>
-    <App />
-    <SplashScreen />
-  </React.StrictMode>
-);
+    <React.StrictMode>
+      <App />
+      <SplashScreen />
+    </React.StrictMode>
+  )
 })
