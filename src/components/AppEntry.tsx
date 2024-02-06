@@ -16,7 +16,7 @@ const AppEntry = ({ execName, callback }: AppEntryProps) => {
     >
       <h1 className='text-white text-[2.6rem] pointer-events-none'>{ execName }</h1>
       <div
-        className='relative aspect-square w-[2.4em] cursor-pointer'
+        className='relative aspect-square w-[2.4em] cursor-pointer hover:scale-110 duration-100'
         onMouseOver={() => animRef.current?.goToAndPlay(20, true) }
         onMouseLeave={() => animRef.current?.goToAndStop(0, true) }
         onClick={() => callback(execName)}
