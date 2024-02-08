@@ -12,8 +12,8 @@ fn main() {
 
   // Copy the files
   let _ = fs::copy(root_dir.join("other/app.conf"), exe_dir.join("app.conf"));
-  let _ = fs::copy(root_dir.join("regeditadd.bat"), exe_dir.join("regeditadd.bat"));
-  let _ = fs::copy(root_dir.join("regeditremove.bat"), exe_dir.join("regeditremove.bat"));
+  // let _ = fs::copy(root_dir.join("regeditadd.bat"), exe_dir.join("regeditadd.bat"));
+  // let _ = fs::copy(root_dir.join("regeditremove.bat"), exe_dir.join("regeditremove.bat"));
 
   tauri_build::build()
 }

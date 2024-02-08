@@ -11,7 +11,7 @@ const AppEntry = ({ execName, callback }: AppEntryProps) => {
   const animRef = useRef<LottieRefCurrentProps>(null)
 
   return (
-    <section className='h-[10vh] w-[90%] flex items-center justify-between px-[25px] py-3 border-purple-600
+    <li className='h-[10vh] w-[90%] flex items-center justify-between px-[25px] py-3 border-purple-600
       border-b-[1px] hover:bg-[#FFF1] duration-300 [&:first-child]:rounded-t-xl'
     >
       <h1 className='text-white text-[2.6rem] pointer-events-none'>{ execName }</h1>
@@ -29,7 +29,7 @@ const AppEntry = ({ execName, callback }: AppEntryProps) => {
           autoplay={false}
         />
       </div>
-    </section>
+    </li>
   )
 }
 export default AppEntry

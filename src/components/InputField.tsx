@@ -56,13 +56,12 @@ const InputField = ({ callback, killFunction }: InputFieldProps) => {
   }, [])
 
   return (
-    <section
+    <li
       className='h-[10vh] w-[90%] flex items-center justify-between px-[25px] py-3 border-purple-600
         border-b-[1px] hover:bg-[#FFF1] duration-300 [&:first-child]:rounded-t-xl'
     >
       <input
         ref={inputRef}
-        // onBlur={() => handleSubmit()}
         onKeyUp={e => handleSubmit(e)}
         type="text"
         placeholder="CASE SENSITIVE"
@@ -77,7 +76,7 @@ const InputField = ({ callback, killFunction }: InputFieldProps) => {
           className='scale-[1.375] absolute left-[0.375rem] top-1'
         />
       </div>
-    </section>
+    </li>
   )
 }
 export default InputField

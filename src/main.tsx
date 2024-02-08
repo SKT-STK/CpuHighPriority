@@ -1,7 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
+import App from "@/pages/App";
 import "@/styles/styles.css";
+import "@/styles/tailwind.css"
 import { invoke } from "@tauri-apps/api/tauri";
 import SplashScreen from "@/helpers/SplashScreen";
 

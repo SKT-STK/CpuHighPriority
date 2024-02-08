@@ -8,7 +8,7 @@ import InputField from "@/components/InputField";
 
 export default function App() {
   const [children, setChildren] = useState<string[]>([])
-  const [inputFieldElement, setInputFieldElement] = useState<ReactNode | null>(null)
+  const [inputFieldElement, setInputFieldElement] = useState<ReactNode>(null)
   const regeditsDirRef = useRef<string | null>(null)
   const appconfDirRef = useRef<string | null>(null)
 
@@ -26,7 +26,7 @@ export default function App() {
     await command.execute()
   }
 
-  async function setGlobalPahts() {
+  async function setGlobalPaths() {
     if (window.processDir.endsWith('debug')) {
       regeditsDirRef.current = await join(window.processDir, '../../..')
       appconfDirRef.current = await join(regeditsDirRef.current, 'other')
@@ -45,8 +45,8 @@ export default function App() {
   }
 
   useEffect(() => {
-    setGlobalPahts()
-      .then(() => fetchStarterData())
+    setGlobalPaths()
+      .then(fetchStarterData)
   }, [])
 
   useEffect(() => {
@@ -56,8 +56,8 @@ export default function App() {
     })()
   }, [children])
 
-  return (
-    <main className='w-full min-h-screen bg-[#1A1A1A] flex flex-col items-center pt-1'>
+  return (<>
+    <ul className='w-full flex flex-col items-center'>
       { children.map((child, index) => (
         <AppEntry key={index} execName={child} callback={handleCallbackRemove} />
       )) }
@@ -67,10 +67,10 @@ export default function App() {
           <InputField callback={handleCallbackAdd} killFunction={() => setInputFieldElement(null)} />
         ) }}
       />
-      <section
-        className='w-full flex-grow'
-        onClick={() => document.dispatchEvent(new CustomEvent('blank-space-clicked'))}
-      />
-    </main>
-  )
+    </ul>
+    <section
+      className='w-full flex-grow'
+      onClick={() => document.dispatchEvent(new CustomEvent('blank-space-clicked'))}
+    />
+  </>)
 }
