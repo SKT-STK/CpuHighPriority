@@ -7,13 +7,15 @@ import { Command } from "@tauri-apps/api/shell";
 import InputField from "@/components/InputField";
 
 export default function App() {
-  const [children, setChildren] = useState<string[]>([])
+  const [children, setChildren] = useState<(string | null)[]>([null])
   const [inputFieldElement, setInputFieldElement] = useState<ReactNode>(null)
   const regeditsDirRef = useRef<string | null>(null)
   const appconfDirRef = useRef<string | null>(null)
 
+  // const [_temp, _setTemp] = useState<string>('')
+
   const handleCallbackAdd = async (execName: string) => {
-    setChildren([...children, execName])
+    setChildren([...children.filter(item => item !== null), execName])
 
     const command = new Command('run-cmd', ['/c', await join(regeditsDirRef.current!, 'regeditadd.bat'), execName])
     await command.execute()
@@ -39,9 +41,13 @@ export default function App() {
 
   async function fetchStarterData() {
     const path = await join(appconfDirRef.current!, 'app.conf')
-    const content = await invoke('read_file', { path }) as string
+    let content = await invoke('read_file', { path }) as string
+    if (content.length === 0) {
+      content = '{\"executablesPaths\":[]}'
+    }
+    // _setTemp(content)
     const parsedContent = JSON.parse(content) as { executablesPaths: string[] }
-    setChildren(parsedContent.executablesPaths)
+    setChildren([null, ...parsedContent.executablesPaths])
   }
 
   useEffect(() => {
@@ -50,10 +56,12 @@ export default function App() {
   }, [])
 
   useEffect(() => {
-    appconfDirRef.current && (async () => {
-      const path = await join(appconfDirRef.current!, 'app.conf')
-      await invoke('write_file', { content: JSON.stringify({ executablesPaths: children }), path })
-    })()
+    if (appconfDirRef.current && children[0] !== null) {
+      (async () => {
+        const path = await join(appconfDirRef.current!, 'app.conf')
+        invoke('write_file', { content: JSON.stringify({ executablesPaths: children }), path })
+      })()
+    }
   }, [children])
 
   return (<>
@@ -72,5 +80,7 @@ export default function App() {
       className='w-full flex-grow'
       onClick={() => document.dispatchEvent(new CustomEvent('blank-space-clicked'))}
     />
+
+    {/* { _temp } */}
   </>)
 }

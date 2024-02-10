@@ -7,16 +7,14 @@ use tauri::{Manager, Window};
 #[tauri::command]
 fn write_file(content: &str, path: &str) {
   let path = path::Path::new(path);
-  std::fs::write(path, content).unwrap();
+  fs::write(path, content).unwrap();
 }
 
 #[tauri::command]
 fn read_file(path: &str) -> String {
   let path = path::Path::new(path);
-  match fs::read_to_string(path) {
-    Ok(x) => x,
-    Err(_) => return String::from("{\"executablesPaths\":[\"XDD\"]}")
-  }
+  fs::read_to_string(path)
+    .unwrap_or(String::from(""))
 }
 
 #[tauri::command]

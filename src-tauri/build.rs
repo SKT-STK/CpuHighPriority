@@ -11,7 +11,7 @@ fn main() {
   let root_dir = &exe_dir.join("../../..");
 
   // Copy the files
-  let _ = fs::copy(root_dir.join("other/app.conf"), exe_dir.join("app.conf"));
+  fs::copy(root_dir.join("other/app.conf"), exe_dir.join("app.conf")).expect("Failed to copy app.conf");
   // let _ = fs::copy(root_dir.join("regeditadd.bat"), exe_dir.join("regeditadd.bat"));
   // let _ = fs::copy(root_dir.join("regeditremove.bat"), exe_dir.join("regeditremove.bat"));
 

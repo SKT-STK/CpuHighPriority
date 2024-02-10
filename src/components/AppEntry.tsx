@@ -3,14 +3,14 @@ import animationData from '@/assets/animations/trashBinAnim.json'
 import { useRef } from 'react'
 
 interface AppEntryProps {
-  execName: string
+  execName: string | null
   callback: (execName: string) => void
 }
 
 const AppEntry = ({ execName, callback }: AppEntryProps) => {
   const animRef = useRef<LottieRefCurrentProps>(null)
 
-  return (
+  return (execName === null ? null :
     <li className='h-[10vh] w-[90%] flex items-center justify-between px-[25px] py-3 border-purple-600
       border-b-[1px] hover:bg-[#FFF1] duration-300 [&:first-child]:rounded-t-xl'
     >
