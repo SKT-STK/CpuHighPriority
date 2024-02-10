@@ -77,7 +77,7 @@ export default function App() {
       />
     </ul>
     <section
-      className='w-full flex-grow'
+      className='w-full flex-grow min-h-screen'
       onClick={() => document.dispatchEvent(new CustomEvent('blank-space-clicked'))}
     />
 
