@@ -8,10 +8,10 @@ fn main() {
   let exe_dir = exe_dir.join("../..");
 
   // Get the root directory from the target one
-  let root_dir = &exe_dir.join("../../..");
+  let debug_dir = &exe_dir.join("../debug");
 
   // Copy the files
-  fs::copy(root_dir.join("other/app.conf"), exe_dir.join("app.conf")).expect("Failed to copy app.conf");
+  fs::copy(debug_dir.join("app.conf"), exe_dir.join("app.conf")).expect("Failed to copy app.conf");
 
   tauri_build::build()
 }
