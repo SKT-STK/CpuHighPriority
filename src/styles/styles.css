@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Inconsolata&family=Nunito:wght@1000&display=swap');
 
+:root {
+  --scrollbar-border-top-radius: 0em; /* from 0em to 0.25em */
+  --scrollbar-border-bottom-radius: 0em; /* from 0em to 0.25em */
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -17,7 +22,7 @@
 }
 
 ::-webkit-scrollbar {
-  width: auto;
+  width: 0.5em;
 }
 
 ::-webkit-scrollbar-track {
@@ -25,5 +30,9 @@
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(to bottom, #F55, #55F);
+  background: linear-gradient(to bottom, hsla(275 81.3 55.9 / 1), hsla(255 81.3 55.9 / 1));
+  border-bottom-left-radius: var(--scrollbar-border-bottom-radius);
+  border-bottom-right-radius: var(--scrollbar-border-bottom-radius);
+  border-top-left-radius: var(--scrollbar-border-top-radius);
+  border-top-right-radius: var(--scrollbar-border-top-radius);
 }

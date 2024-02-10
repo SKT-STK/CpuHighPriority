@@ -11,9 +11,15 @@ const AppEntry = ({ execName, callback }: AppEntryProps) => {
   const animRef = useRef<LottieRefCurrentProps>(null)
 
   return (execName === null ? null :
-    <li className='h-[10vh] w-[90%] flex items-center justify-between px-[25px] py-3 border-purple-600
-      border-b-[1px] hover:bg-[#FFF1] duration-300 [&:first-child]:rounded-t-xl'
+    <li className='h-[10vh] w-[90%] flex items-center justify-between px-[25px]
+      hover:bg-[#FFF1] duration-300 [&:first-child]:rounded-t-xl relative py-3'
     >
+      <div
+        className='z-10 absolute left-0 right-0 bottom-[-1px] h-[1px]'
+        style={{
+          background: 'linear-gradient(to right, hsla(275 81.3 55.9 / 1), hsla(255 81.3 55.9 / 1))'
+        }}
+      />
       <h1 className='text-white text-[2.6rem] pointer-events-none'>{ execName }</h1>
       <div
         className='relative aspect-square w-[2.4em] cursor-pointer hover:scale-110 duration-100'

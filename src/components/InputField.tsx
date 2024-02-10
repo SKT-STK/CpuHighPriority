@@ -1,14 +1,17 @@
 import Lottie from "lottie-react"
 import animationData from '@/assets/animations/searchAnim.json'
-import { useEffect, useRef } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import { open } from '@tauri-apps/api/dialog'
+import { Command } from "@tauri-apps/api/shell"
+import { join } from "@tauri-apps/api/path"
 
 interface InputFieldProps {
-  callback: (execName: string) => void
+  children: (string | null)[]
+  setChildren: (children: (string | null)[]) => void
   killFunction: () => void
 }
 
-const InputField = ({ callback, killFunction }: InputFieldProps) => {
+const InputField = ({ children, setChildren, killFunction }: InputFieldProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleOnClick = async () => {
@@ -31,12 +34,19 @@ const InputField = ({ callback, killFunction }: InputFieldProps) => {
   }
 
   const handleSubmit = (e?: React.KeyboardEvent<HTMLInputElement>) => {
+    async function addChildren(execName: string) {
+      setChildren([...children.filter(item => item !== null), execName])
+  
+      const command = new Command('run-cmd', ['/c', await join(window.processDir, 'regeditadd.bat'), execName])
+      await command.execute()
+    }
+
     if ((!!e && e.key !== 'Enter') || typeof inputRef.current?.value !== 'string') {
       return
     }
 
     if (inputRef.current?.value.length !== 0) {
-      callback(
+      addChildren(
         inputRef.current?.value.toLowerCase().endsWith('.exe')
           ? inputRef.current.value
           : inputRef.current?.value + '.exe'
@@ -44,16 +54,17 @@ const InputField = ({ callback, killFunction }: InputFieldProps) => {
     }
     killFunction()
   }
+  const handleSubmitCallback = useCallback(handleSubmit, [children, killFunction, setChildren])
 
   useEffect(() => {
     inputRef.current?.focus()
 
-    document.addEventListener('blank-space-clicked', () => handleSubmit())
+    document.addEventListener('blank-space-clicked', () => handleSubmitCallback())
 
     return () => {
-      document.removeEventListener('blank-space-clicked', () => handleSubmit())
+      document.removeEventListener('blank-space-clicked', () => handleSubmitCallback())
     }
-  }, [])
+  }, [handleSubmitCallback])
 
   return (
     <li
