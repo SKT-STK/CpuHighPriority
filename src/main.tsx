@@ -18,10 +18,9 @@ declare global {
     process: Process
   }
 }
+window.process = {} as unknown as Process
 
 const initApp = async () => {
-  window.process = {} as unknown as Process
-
   invoke('create_bat_files')
   window.process.directory = await invoke('get_process_dir') as string
   window.process.operatingSystem = await invoke('get_operating_system') as OperatingSystems

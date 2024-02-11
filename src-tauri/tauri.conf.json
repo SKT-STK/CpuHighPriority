@@ -1,7 +1,7 @@
 {
   "build": {
     "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run lint && npm run build && cp src-tauri/target/debug/app.conf src-tauri/target/release/app.conf",
+    "beforeBuildCommand": "npm run lint && npm run build && cp src-tauri/target/debug/executables.json src-tauri/target/release/executables.json",
     "devPath": "http://localhost:1420",
     "distDir": "../dist"
   },
