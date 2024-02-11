@@ -1,7 +1,9 @@
 {
   "name": "cpu-high-priority",
   "private": true,
-  "version": "0.0.0",
+  "version": "2.1.0",
+  "author": {"name": "SKT-STK"},
+  "license": "Copyright (c) 2024 SKT-STK",
   "type": "module",
   "scripts": {
     "dev": "vite",

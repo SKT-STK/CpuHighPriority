@@ -7,14 +7,24 @@ import { invoke } from "@tauri-apps/api/tauri";
 import SplashScreen from "@/helpers/SplashScreen";
 
 declare global {
+  type OperatingSystems = 'Win10' | 'Win11'
+
+  interface Process {
+    directory: string
+    operatingSystem: OperatingSystems
+  }
+
   interface Window {
-    processDir: string
+    process: Process
   }
 }
 
 const initApp = async () => {
+  window.process = {} as unknown as Process
+
   invoke('create_bat_files')
-  window.processDir = await invoke('get_process_dir') as string
+  window.process.directory = await invoke('get_process_dir') as string
+  window.process.operatingSystem = await invoke('get_operating_system') as OperatingSystems
 }
 
 initApp().then(() => {

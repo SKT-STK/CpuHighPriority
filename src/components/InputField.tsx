@@ -37,7 +37,7 @@ const InputField = ({ children, setChildren, killFunction }: InputFieldProps) =>
     async function addChildren(execName: string) {
       setChildren([...children.filter(item => item !== null), execName])
   
-      const command = new Command('run-cmd', ['/c', await join(window.processDir, 'regeditadd.bat'), execName])
+      const command = new Command('run-cmd', ['/c', await join(window.process.directory, 'regeditadd.bat'), execName, window.process.operatingSystem === 'Win11' ? '3' : '5'])
       await command.execute()
     }
 
