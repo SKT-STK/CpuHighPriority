@@ -10,17 +10,17 @@ export function useFileOps() {
       const path = await join(window.process.directory, 'executables.json')
       let content = await invoke('read_file', { path }) as string
       if (content.length === 0) {
-        content = '{"executablesPaths":[]}'
+        content = '[]'
       }
-      const parsedContent = JSON.parse(content) as { executablesPaths: string[] }
-      setChildren([null, ...parsedContent.executablesPaths])
+      const parsedContent = JSON.parse(content) as string[]
+      setChildren([null, ...parsedContent])
     })()
   }, [])
 
   useEffect(() => {
     async function writeToFile() {
       const path = await join(window.process.directory, 'executables.json')
-      invoke('write_file', { content: JSON.stringify({ executablesPaths: children }), path })
+      invoke('write_file', { content: JSON.stringify(children), path })
    }
 
     if (children[0] !== null) {

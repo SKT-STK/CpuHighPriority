@@ -20,6 +20,7 @@ fn main() {
       get_process_dir,
       show_main_win,
       get_operating_system
-    ]).run(tauri::generate_context!())
+    ])
+    .run(tauri::generate_context!())
     .expect("Could not start Tauri application.");
 }
