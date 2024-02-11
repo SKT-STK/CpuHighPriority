@@ -1,4 +1,4 @@
-const BlankSpaceClickedEmitter = () => {
+const BlankSpace = () => {
   return (
     <section
       className='w-full flex-grow'
@@ -6,4 +6,4 @@ const BlankSpaceClickedEmitter = () => {
     />
   )
 }
-export default BlankSpaceClickedEmitter
+export default BlankSpace

@@ -4,7 +4,7 @@ import { useEffect } from "react"
 const SplashScreen = () => {
   useEffect(() => {
     (async () => {
-      invoke('close_splashscreen')
+      invoke('show_main_win')
     })()
   }, [])
 

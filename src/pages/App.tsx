@@ -3,7 +3,7 @@ import AddEntry from "@/components/AddEntry";
 import InputField from "@/components/InputField";
 import { useFileOps } from "@/hooks/useFileOps";
 import EntryList from "@/components/EntryList";
-import BlankSpaceClickedEmitter from "@/components/BlankSpaceClickedEmitter";
+import BlankSpace from "@/components/BlankSpace";
 import ScrollBar from "@/helpers/ScrollBar";
 
 export default function App() {
@@ -18,6 +18,6 @@ export default function App() {
         <InputField setChildren={setChildren} killFunction={() => setInputFieldElement(null)}>{ children }</InputField>
       ) }}
     />
-    <BlankSpaceClickedEmitter />
+    <BlankSpace />
   </>)
 }

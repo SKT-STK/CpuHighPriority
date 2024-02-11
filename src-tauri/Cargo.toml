@@ -3,7 +3,7 @@ name = "cpu-high-priority"
 version = "0.0.0"
 description = "Simple app to easily menage which apps shall have High CPU Priority all the time!"
 authors = []
-license = "MIT SKT-STK (c) 2024"
+license = ""
 repository = ""
 edition = "2021"
 

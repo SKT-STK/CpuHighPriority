@@ -1,13 +1,13 @@
 {
   "build": {
     "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run lint && npm run build",
+    "beforeBuildCommand": "npm run lint && npm run build && cp src-tauri/target/debug/app.conf src-tauri/target/release/app.conf",
     "devPath": "http://localhost:1420",
     "distDir": "../dist"
   },
   "package": {
     "productName": "CPU High Priority",
-    "version": "1.2.0"
+    "version": "2.0.0"
   },
   "tauri": {
     "allowlist": {
@@ -52,17 +52,6 @@
         "minWidth": 500,
         "minHeight": 375,
         "visible": false
-      },
-      {
-        "width": 400,
-        "height": 200,
-        "title": "CPU High Priority",
-        "label": "splashscreen",
-        "center": true,
-        "decorations": false,
-        "alwaysOnTop": true,
-        "transparent": true,
-        "url": "splashscreen.html"
       }
     ]
   }
