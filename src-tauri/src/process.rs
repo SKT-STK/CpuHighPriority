@@ -1,4 +1,12 @@
-use std::{env, str, process::Command};
+extern crate winapi;
+
+use std::{env, ptr, io::Error, process::exit};
+use winapi::um::{
+  handleapi::CloseHandle,
+  processthreadsapi::{GetCurrentProcess, OpenProcessToken},
+  securitybaseapi::GetTokenInformation,
+  winnt::{HANDLE, TOKEN_ELEVATION, TOKEN_QUERY, TokenElevation}
+};
 
 #[tauri::command]
 pub fn get_process_dir() -> String {
@@ -7,24 +15,52 @@ pub fn get_process_dir() -> String {
 }
 
 #[tauri::command]
-pub fn get_operating_system() -> String {
-  let output = Command::new("cmd")
-    .args(&["/C", "wmic os get Caption"])
-    .output()
-    .unwrap();
+pub fn exit_app() {
+  exit(0);
+}
 
-  let os_caption = str::from_utf8(&output.stdout)
-    .unwrap()
-    .trim()
-    .to_string();
+#[tauri::command]
+pub fn is_app_elevated() -> bool {
+  if let Ok(token) = QueryAccessToken::from_current_process() {
+    token.is_elevated().unwrap_or(false)
+  }
+  else { false }
+}
 
-  if os_caption.contains("Windows 10") {
-    String::from("Win10")
+/// A safe wrapper around querying Windows access tokens.
+pub struct QueryAccessToken(HANDLE);
+impl QueryAccessToken {
+  pub fn from_current_process() -> Result<Self, Error> {
+    unsafe {
+      let mut handle: HANDLE = ptr::null_mut();
+      if OpenProcessToken(GetCurrentProcess(), TOKEN_QUERY, &mut handle) != 0 {
+        Ok ( Self(handle) )
+      }
+      else {
+        Err(Error::last_os_error())
+      }
+    }
   }
-  else if os_caption.contains("Windows 11") {
-    String::from("Win11")
+
+  pub fn is_elevated(&self) -> Result<bool, Error> {
+    unsafe {
+      let mut elevation = TOKEN_ELEVATION::default();
+      let size = std::mem::size_of::<TOKEN_ELEVATION>() as u32;
+      let mut ret_size = size;
+      // The weird looking repetition of `as *mut _` is casting the reference to a c_void pointer.
+      if GetTokenInformation(self.0, TokenElevation, &mut elevation as *mut _ as *mut _, size, &mut ret_size ) != 0 {
+        Ok(elevation.TokenIsElevated != 0)
+      }
+      else {
+        Err(Error::last_os_error())
+      }
+    }
   }
-  else {
-    String::from("")
+}
+impl Drop for QueryAccessToken {
+  fn drop(&mut self) {
+    if !self.0.is_null() {
+      unsafe { CloseHandle(self.0) };
+    }
   }
 }

@@ -1,7 +1,7 @@
 {
   "build": {
     "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run lint && npm run build && cp src-tauri/target/debug/executables.json src-tauri/target/release/executables.json",
+    "beforeBuildCommand": "npm run lint && npm run build && cp src-tauri/target/debug/resources/executables.json src-tauri/target/release/resources/executables.json && cp src-tauri/target/debug/resources/regeditadd.bat src-tauri/target/release/resources/regeditadd.bat && cp src-tauri/target/debug/resources/regeditremove.bat src-tauri/target/release/resources/regeditremove.bat && cp src-tauri/target/debug/resources/executables.json src-tauri/resources/executables.json && cp src-tauri/target/debug/resources/regeditadd.bat src-tauri/resources/regeditadd.bat && cp src-tauri/target/debug/resources/regeditremove.bat src-tauri/resources/regeditremove.bat",
     "devPath": "http://localhost:1420",
     "distDir": "../dist"
   },
@@ -32,11 +32,16 @@
     },
     "bundle": {
       "active": true,
-      "targets": "all",
+      "targets": "nsis",
       "identifier": "cpu-high-priority.skt-stk.dev",
       "icon": [
         "icons/icon.png",
         "icons/icon.ico"
+      ],
+      "resources": [
+        "resources\\executables.json",
+        "resources\\regeditadd.bat",
+        "resources\\regeditremove.bat"
       ]
     },
     "security": {

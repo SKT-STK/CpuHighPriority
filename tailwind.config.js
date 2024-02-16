@@ -7,7 +7,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        inconsolata: ['Inconsolata', 'monospace']
+        inconsolata: ['Inconsolata', 'monospace'],
+        libreFranklin: ['Libre Franklin', 'sans-serif']
       },
     },
   },
