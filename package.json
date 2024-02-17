@@ -2,7 +2,9 @@
   "name": "cpu-high-priority",
   "private": true,
   "version": "2.1.0",
-  "author": {"name": "SKT-STK"},
+  "author": {
+    "name": "SKT-STK"
+  },
   "license": "Copyright (c) 2024 SKT-STK",
   "type": "module",
   "scripts": {
@@ -17,6 +19,7 @@
     "lottie-react": "^2.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-toastify": "^10.0.4",
     "vite-tsconfig-paths": "^4.3.1"
   },
   "devDependencies": {

@@ -5,6 +5,8 @@ import { useFileOps } from "@/hooks/useFileOps";
 import EntryList from "@/components/EntryList";
 import BlankSpace from "@/components/BlankSpace";
 import ScrollBar from "@/helpers/ScrollBar";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.min.css"
 
 export default function App() {
   const [inputFieldElement, setInputFieldElement] = useState<ReactNode>(null)
@@ -19,5 +21,6 @@ export default function App() {
       ) }}
     />
     <BlankSpace />
+    <ToastContainer />
   </>)
 }

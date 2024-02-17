@@ -4,12 +4,20 @@ import { useCallback, useEffect, useRef } from "react"
 import { open } from '@tauri-apps/api/dialog'
 import { Command } from "@tauri-apps/api/shell"
 import { join } from "@tauri-apps/api/path"
+import { ToastOptions, toast } from "react-toastify"
 
 interface InputFieldProps {
   children: (string | null)[]
   setChildren: (children: (string | null)[]) => void
   killFunction: () => void
 }
+
+const toastOption = {
+  position: 'top-center',
+  autoClose: 4000,
+  draggable: false,
+  theme: 'dark'
+} as ToastOptions<unknown>
 
 const InputField = ({ children, setChildren, killFunction }: InputFieldProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -34,11 +42,15 @@ const InputField = ({ children, setChildren, killFunction }: InputFieldProps) =>
   }
 
   const handleSubmit = (e?: React.KeyboardEvent<HTMLInputElement>) => {
-    async function addChildren(execName: string) {
+    const addChildren = async (execName: string) => {
       setChildren([...children.filter(item => item !== null), execName])
-  
-      const command = new Command('run-cmd', ['/c', await join(window.process.resources, 'regeditadd.bat'), '3'])
-      await command.execute()
+
+      return await join(window.process.resources, 'regeditadd.bat').then(async path => {
+        const output = await (new Command('run-cmd', ['/c', path, execName])).execute()
+        return new Promise<string>((resolve, reject) => {
+          output.code ? reject(execName) : resolve(execName)
+        })
+      })
     }
 
     if ((!!e && e.key !== 'Enter') || typeof inputRef.current?.value !== 'string') {
@@ -51,6 +63,12 @@ const InputField = ({ children, setChildren, killFunction }: InputFieldProps) =>
           ? inputRef.current.value
           : inputRef.current?.value + '.exe'
       )
+      .then(execName => (
+        toast.success(`${execName} has been added to the registry successfully!`, toastOption)
+      ))
+      .catch(execName => (
+        toast.error(`Something went wrong... ${execName} hasn't been added to the registry`, toastOption)
+      ))
     }
     killFunction()
   }
@@ -66,7 +84,7 @@ const InputField = ({ children, setChildren, killFunction }: InputFieldProps) =>
     }
   }, [handleSubmitCallback])
 
-  return (
+  return (<>
     <li
       className='h-[10vh] w-[90%] flex items-center justify-between px-[25px] py-3 border-purple-600
         border-b-[1px] hover:bg-[#FFF1] duration-300 [&:first-child]:rounded-t-xl'
@@ -88,6 +106,6 @@ const InputField = ({ children, setChildren, killFunction }: InputFieldProps) =>
         />
       </div>
     </li>
-  )
+  </>)
 }
 export default InputField

@@ -1,14 +1,32 @@
 import Lottie, { LottieRefCurrentProps } from 'lottie-react'
 import animationData from '@/assets/animations/trashBinAnim.json'
 import { useRef } from 'react'
+import { ToastOptions, toast } from 'react-toastify'
 
 interface AppEntryProps {
   execName: string | null
-  callback: (execName: string) => void
+  callback: (execName: string) => Promise<void>
 }
+
+const toastOption = {
+  position: 'top-center',
+  autoClose: 4000,
+  draggable: false,
+  theme: 'dark'
+} as ToastOptions<unknown>
 
 const AppEntry = ({ execName, callback }: AppEntryProps) => {
   const animRef = useRef<LottieRefCurrentProps>(null)
+
+  const handleOnClick = () => {
+    callback(execName!)
+      .then(() => (
+        toast.success(`${execName} has been removed from the registry successfully!`, toastOption)
+      ))
+      .catch(() => (
+        toast.error('Something went wrong... Nothing\'s been removed from the registry', toastOption)
+      ))
+  }
 
   return (execName === null ? null :
     <li className='h-[10vh] w-[90%] flex items-center justify-between px-[25px]
@@ -25,7 +43,8 @@ const AppEntry = ({ execName, callback }: AppEntryProps) => {
         className='relative aspect-square w-[2.4em] cursor-pointer hover:scale-110 duration-100'
         onMouseOver={() => animRef.current?.goToAndPlay(20, true) }
         onMouseLeave={() => animRef.current?.goToAndStop(0, true) }
-        onClick={() => callback(execName)}
+        // onClick={() => callback(execName)}
+        onClick={handleOnClick}
       >
         <Lottie
           lottieRef={animRef}

@@ -4,6 +4,7 @@
 mod file_operations;
 mod process;
 mod window;
+mod os_wrappers;
 
 fn main() {
   tauri::Builder::default()
