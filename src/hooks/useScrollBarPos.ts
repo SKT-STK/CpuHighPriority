@@ -25,5 +25,5 @@ export function useScrollBarPos() {
     }
   }, [])
 
-  return scrollPerc
+  return { scrollPerc }
 }

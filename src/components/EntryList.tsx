@@ -13,12 +13,10 @@ const EntryList = ({ children, setChildren, inputFieldElement }: EntryListProps)
   const handleCallbackRemove = async (execName: string) => {
     setChildren(children.filter(item => item !== execName))
 
-    // const command = new Command('run-cmd', ['/c', await join(window.process.resources, 'regeditremove.bat'), execName])
-    // await command.execute()
     return await join(window.process.resources, 'regeditremove.bat')
       .then(async path => {
         const output = await (new Command('run-cmd', ['/c', path, execName])).execute()
-        return new Promise<void>((resolve, reject) => {
+        return await new Promise<void>((resolve, reject) => {
           output.code ? reject() : resolve()
         })
       })

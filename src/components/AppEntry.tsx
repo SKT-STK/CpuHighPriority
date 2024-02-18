@@ -1,5 +1,5 @@
-import Lottie, { LottieRefCurrentProps } from 'lottie-react'
 import animationData from '@/assets/animations/trashBinAnim.json'
+import Lottie, { LottieRefCurrentProps } from 'lottie-react'
 import { useRef } from 'react'
 import { ToastOptions, toast } from 'react-toastify'
 
@@ -30,20 +30,16 @@ const AppEntry = ({ execName, callback }: AppEntryProps) => {
 
   return (execName === null ? null :
     <li className='h-[10vh] w-[90%] flex items-center justify-between px-[25px]
-      hover:bg-[#FFF1] duration-300 [&:first-child]:rounded-t-xl relative py-3'
+      hover:bg-[#FFF1] duration-300 [&:first-child]:rounded-t-xl relative py-3
+      before:absolute before:left-0 before:right-0 before:bottom-[-1px] 
+      before:h-[1px] before:bg-gradient-to-r before:from-[hsla(275,81.3%,55.9%,1)]
+      before:to-[hsla(255,81.3%,55.9%,1)]'
     >
-      <div
-        className='z-10 absolute left-0 right-0 bottom-[-1px] h-[1px]'
-        style={{
-          background: 'linear-gradient(to right, hsla(275 81.3 55.9 / 1), hsla(255 81.3 55.9 / 1))'
-        }}
-      />
       <h1 className='text-white text-[2.6rem] pointer-events-none'>{ execName }</h1>
       <div
         className='relative aspect-square w-[2.4em] cursor-pointer hover:scale-110 duration-100'
         onMouseOver={() => animRef.current?.goToAndPlay(20, true) }
         onMouseLeave={() => animRef.current?.goToAndStop(0, true) }
-        // onClick={() => callback(execName)}
         onClick={handleOnClick}
       >
         <Lottie

@@ -21,6 +21,7 @@ const toastOption = {
 
 const InputField = ({ children, setChildren, killFunction }: InputFieldProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
+  const handleSubmitCallback = useCallback(handleSubmit, [children, killFunction, setChildren])
 
   const handleOnClick = async () => {
     const selected = await open({
@@ -41,13 +42,13 @@ const InputField = ({ children, setChildren, killFunction }: InputFieldProps) =>
     handleSubmit()
   }
 
-  const handleSubmit = (e?: React.KeyboardEvent<HTMLInputElement>) => {
+  function handleSubmit(e?: React.KeyboardEvent<HTMLInputElement>) {
     const addChildren = async (execName: string) => {
       setChildren([...children.filter(item => item !== null), execName])
 
       return await join(window.process.resources, 'regeditadd.bat').then(async path => {
         const output = await (new Command('run-cmd', ['/c', path, execName])).execute()
-        return new Promise<string>((resolve, reject) => {
+        return await new Promise<string>((resolve, reject) => {
           output.code ? reject(execName) : resolve(execName)
         })
       })
@@ -72,7 +73,6 @@ const InputField = ({ children, setChildren, killFunction }: InputFieldProps) =>
     }
     killFunction()
   }
-  const handleSubmitCallback = useCallback(handleSubmit, [children, killFunction, setChildren])
 
   useEffect(() => {
     inputRef.current?.focus()

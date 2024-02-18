@@ -8,12 +8,10 @@ const NoAdmin = () => {
     >
       <main
         className='w-1/2 max-h-[50vh] flex flex-grow rounded-xl relative
-          justify-center items-center text-center bg-[#1A1A1A] flex-col'
+          justify-center items-center text-center bg-[#1A1A1A] flex-col
+          before:absolute before:-inset-[2px] before:bg-gradient-to-br
+          before:from-[#22F] before:to-[#F2F] before:-z-[1] before:rounded-[inherit]'
       >
-        <section
-          className='absolute -inset-[2px] bg-gradient-to-br from-[#22F]
-            to-[#F2F] -z-[1] rounded-[inherit]'
-        />
         <p
           className='text-white text-2xl max-w-[80%] font-libreFranklin'
         >

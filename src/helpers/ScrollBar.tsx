@@ -1,16 +1,16 @@
 import { useScrollBarPos } from "@/hooks/useScrollBarPos"
 
 const ScrollBar = () => {
-  const scrollBarPos = useScrollBarPos()
+  const { scrollPerc } = useScrollBarPos()
   
-  if (scrollBarPos !== 0) {
+  if (scrollPerc !== 0) {
     document.documentElement.style.setProperty('--scrollbar-border-top-radius', '0.25em')
   }
   else {
     document.documentElement.style.setProperty('--scrollbar-border-top-radius', '0em')
   }
 
-  if (scrollBarPos !== 100) {
+  if (scrollPerc !== 100) {
     document.documentElement.style.setProperty('--scrollbar-border-bottom-radius', '0.25em')
   }
   else {
