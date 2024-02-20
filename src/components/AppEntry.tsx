@@ -32,19 +32,19 @@ const AppEntry = ({ execName, callback }: AppEntryProps) => {
     <li className='h-[10vh] w-[90%] flex items-center justify-between px-[25px]
       hover:bg-[#FFF1] duration-300 [&:first-child]:rounded-t-xl relative py-3
       before:absolute before:left-0 before:right-0 before:bottom-[-1px] 
-      before:h-[1px] before:bg-gradient-to-r before:from-[hsla(275,81.3%,55.9%,1)]
-      before:to-[hsla(255,81.3%,55.9%,1)]'
+      before:h-[1px] before:bg-gradient-to-r before:from-[hsl(275,81.3%,55.9%)]
+      before:to-[hsl(255,81.3%,55.9%)] transition-colors'
     >
       <h1 className='text-white text-[2.6rem] pointer-events-none'>{ execName }</h1>
       <div
-        className='relative aspect-square w-[2.4em] cursor-pointer hover:scale-110 duration-100'
+        className='relative aspect-square w-[2.4em] cursor-pointer hover:scale-125 duration-100'
         onMouseOver={() => animRef.current?.goToAndPlay(20, true) }
         onMouseLeave={() => animRef.current?.goToAndStop(0, true) }
         onClick={handleOnClick}
       >
         <Lottie
           lottieRef={animRef}
-          className='absolute scale-150 pointer-events-none hover:scale-[1.75]'
+          className='absolute scale-150 pointer-events-none'
           animationData={animationData}
           loop={true}
           autoplay={false}

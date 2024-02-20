@@ -86,8 +86,11 @@ const InputField = ({ children, setChildren, killFunction }: InputFieldProps) =>
 
   return (<>
     <li
-      className='h-[10vh] w-[90%] flex items-center justify-between px-[25px] py-3 border-purple-600
-        border-b-[1px] hover:bg-[#FFF1] duration-300 [&:first-child]:rounded-t-xl'
+      className='h-[10vh] w-[90%] flex items-center justify-between px-[25px] py-3
+        relative hover:bg-[#FFF1] duration-300 [&:first-child]:rounded-t-xl
+        transition-colors before:left-0 before:right-0 before:absolute before:h-[1px]
+        before:bottom-[-1px] before:bg-gradient-to-r before:from-[hsl(275,81.3%,55.9%)]
+        before:to-[hsl(255,81.3%,55.9%)]'
     >
       <input
         ref={inputRef}
@@ -102,7 +105,7 @@ const InputField = ({ children, setChildren, killFunction }: InputFieldProps) =>
       >
         <Lottie
           animationData={animationData}
-          className='scale-[1.375] absolute left-[0.375rem] top-1'
+          className='scale-[1.375] absolute left-[0.375rem] top-1 hover:scale-[1.625] duration-100'
         />
       </div>
     </li>
