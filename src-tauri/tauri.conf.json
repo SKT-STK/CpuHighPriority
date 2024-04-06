@@ -1,7 +1,7 @@
 {
   "build": {
-    "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run lint && npm run build && cp src-tauri/target/debug/resources/executables.json src-tauri/target/release/resources/executables.json && cp src-tauri/target/debug/resources/regeditadd.bat src-tauri/target/release/resources/regeditadd.bat && cp src-tauri/target/debug/resources/regeditremove.bat src-tauri/target/release/resources/regeditremove.bat && cp src-tauri/target/debug/resources/executables.json src-tauri/resources/executables.json && cp src-tauri/target/debug/resources/regeditadd.bat src-tauri/resources/regeditadd.bat && cp src-tauri/target/debug/resources/regeditremove.bat src-tauri/resources/regeditremove.bat",
+    "beforeDevCommand": "bun run dev",
+    "beforeBuildCommand": "bun run lint && bun run build",
     "devPath": "http://localhost:1420",
     "distDir": "../dist"
   },
